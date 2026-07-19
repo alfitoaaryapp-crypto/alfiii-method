@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+<hed>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html, body {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+      margin: 0;
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #0b0e14;
+      color: #f0f3fa;
+    }
+    .card {
+      width: 100%;
+      max-width: 400px;
+      background: rgba(18, 24, 34, 0.85);
+      backdrop-filter: blur(12px);
+      border-radius: 32px;
+      border: 1px solid rgba(0, 255, 255, 0.15);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(0, 255, 255, 0.05) inset;
+      padding: 20px 18px 24px;
+      animation: fadeUp 0.35s ease forwards;
+    }
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(18px) scale(0.96); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .logo {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #00e0ff, #0055ff);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 800;
+      color: #fff;
+      box-shadow: 0 8px 24px rgba(0, 180, 255, 0.3);
+    }
+    .title-group h1 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      background: linear-gradient(135deg, #b0f0ff, #6ab0ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .title-group .sub {
+      font-size: 11px;
+      color: #8a9bb5;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+    }
+    .badge {
+      background: rgba(0, 200, 255, 0.12);
+      border: 1px solid rgba(0, 200, 255, 0.2);
+      border-radius: 40px;
+      padding: 4px 10px;
+      font-size: 9px;
+      font-weight: 600;
+      color: #8acbff;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-left: auto;
+    }
+    .warning-banner {
+      background: rgba(255, 200, 50, 0.10);
+      border: 1px solid rgba(255, 200, 50, 0.2);
+      border-radius: 16px;
+      padding: 10px 12px;
+      margin-bottom: 14px;
+      font-size: 12px;
+      color: #ffd866;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+    }
+    .warning-banner::before {
+      content: "⚠️";
+      font-size: 16px;
+    }
+    .field {
+      margin-top: 12px;
+    }
+    .field label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      color: #9aafc9;
+      margin-bottom: 6px;
+      letter-spacing: 0.3px;
+    }
+    input[type="file"] {
+      width: 100%;
+      padding: 10px 12px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      color: #d0dcec;
+      font-size: 13px;
+      outline: none;
+      transition: 0.2s;
+    }
+    input[type="file"]:hover,
+    input[type="file"]:focus {
+      border-color: rgba(0, 200, 255, 0.4);
+      background: rgba(0, 0, 0, 0.55);
+    }
+    input[type="file"]::file-selector-button {
+      background: rgba(0, 200, 255, 0.15);
+      border: 1px solid rgba(0, 200, 255, 0.2);
+      border-radius: 30px;
+      padding: 6px 14px;
+      color: #b0e0ff;
+      font-weight: 600;
+      font-size: 11px;
+      cursor: pointer;
+      transition: 0.2s;
+      margin-right: 10px;
+    }
+    input[type="file"]::file-selector-button:hover {
+      background: rgba(0, 200, 255, 0.25);
+      border-color: rgba(0, 200, 255, 0.5);
+    }
+    .actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .btn {
+      flex: 1;
+      padding: 12px 0;
+      border: none;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      transition: 0.2s ease;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: #c8d8f0;
+    }
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      transform: translateY(-1px);
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #00b4ff, #0066ff);
+      border: none;
+      color: #fff;
+      box-shadow: 0 6px 20px rgba(0, 100, 255, 0.3);
+    }
+    .btn-primary:hover {
+      box-shadow: 0 8px 28px rgba(0, 100, 255, 0.5);
+      transform: translateY(-2px);
+    }
+    .btn-primary:disabled {
+      opacity: 0.4;
+      transform: none;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+    .status {
+      margin-top: 14px;
+      padding: 12px 14px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      font-size: 13px;
+      font-weight: 500;
+      color: #b0c8e0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: 0.2s;
+    }
+    .status .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #4a5a72;
+      transition: 0.2s;
+    }
+    .status[data-state="processing"] .dot {
+      background: #00b4ff;
+      box-shadow: 0 0 12px #00b4ff;
+    }
+    .status[data-state="success"] .dot {
+      background: #00e88a;
+      box-shadow: 0 0 12px #00e88a;
+    }
+    .status[data-state="error"] .dot {
+      background: #ff4d6d;
+      box-shadow: 0 0 12px #ff4d6d;
+    }
+
+    /* Toggle sections */
+    .toggle-section {
+      margin-top: 16px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 12px;
+    }
+    .toggle-btn {
+      background: transparent;
+      border: none;
+      color: #8a9bb5;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.2s;
+      padding: 4px 0;
+      width: 100%;
+      text-align: left;
+    }
+    .toggle-btn:hover {
+      color: #b0c8e0;
+    }
+    .toggle-btn .arrow {
+      transition: transform 0.2s;
+      display: inline-block;
+    }
+    .toggle-btn.open .arrow {
+      transform: rotate(90deg);
+    }
+    .toggle-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, opacity 0.3s ease;
+      opacity: 0;
+      font-size: 13px;
+      color: #b0c8e0;
+      line-height: 1.6;
+    }
+    .toggle-content.open {
+      max-height: 2000px; /* cukup buat teks panjang */
+      opacity: 1;
+      padding-top: 10px;
+    }
+    .toggle-content p {
+      margin-bottom: 8px;
+    }
+    .toggle-content ol, .toggle-content ul {
+      padding-left: 20px;
+      margin: 6px 0;
+    }
+    .toggle-content li {
+      margin-bottom: 4px;
+    }
+    .toggle-content .highlight {
+      color: #ffd866;
+    }
+    .toggle-content strong {
+      color: #e0e8f0;
+    }
+
+    .lang-switch {
+      display: flex;
+      gap: 4px;
+      margin-top: 14px;
+      justify-content: flex-end;
+    }
+    .lang-btn {
+      background: transparent;
+      border: none;
+      color: #6a7e9a;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .lang-btn:hover,
+    .lang-btn.active {
+      color: #c0defa;
+      background: rgba(0, 200, 255, 0.08);
+    }
+  </style>
+</head>
+<body>
+  <div class="card" id="app">
+    <div class="header">
+      <div class="logo">A</div>
+      <div class="title-group">
+        <h1>ALFITOD</h1>
+        <div class="sub">by Alfiii</div>
+      </div>
+      <div class="badge">v1.0</div>
+    </div>
+
+    <!-- Banner peringatan -->
+    <div class="warning-banner">
+      FOLLOW TIKTOK @Alfitod_ 
+    </div>
+
+    <div class="field">
+      <label for="fileInput">Pilih video</label>
+      <input type="file" id="fileInput" accept="video/*" />
+    </div>
+
+    <div class="actions">
+      <button class="btn" id="openTabBtn">Buka di tab</button>
+      <button class="btn btn-primary" id="patchBtn" disabled>Patch & Download</button>
+    </div>
+
+    <div class="status" id="status" data-state="idle">
+      <span class="dot"></span>
+      <span id="statusText">Siap</span>
+    </div>
+
+    <!-- Tutorial singkat -->
+    <div class="toggle-section">
+      <button class="toggle-btn" id="tutorialToggle">
+        <span class="arrow">▶</span> Cara pakai
+      </button>
+      <div class="toggle-content" id="tutorialContent">
+        <ol>
+          <li><span class="highlight">Download Quetta Browser</span> (atau pakai Chrome aja).</li>
+          <li>buka website ini.</li>
+          <li>pilih video (1080p/60fps/bitrate 20mbps).</li>
+          <li>Klik Patch & Download – hasilnya <strong>output</strong>.</li>
+          <li>Upload ke TikTok Studio Web (mode Desktop), set <strong>Private</strong>, tunggu 4 menit.</li>
+          <li>Buka di HP, ganti ke <strong>Everyone</strong>.</li>
+        </ol>
+        <p><em>Must Follow: @darkstar60fps, @aquabujang, @nxt_shark537</em></p>
+      </div>
+    </div>
+
+    <!-- Bahan Bacaan: Penjelasan Patcher -->
+    <div class="toggle-section">
+      <button class="toggle-btn" id="explanationToggle">
+        <span class="arrow">▶</span> Penjelasan Patcher (Baca ini!)
+      </button>
+      <div class="toggle-content" id="explanationContent">
+        <p><strong>Patcher itu buat apa dan cara kerjanya gimana?</strong></p>
+        <p>Jadi patcher itu gunanya buat ngakalin TikTok biar gak bikin video lu burik pas di-upload. Caranya dia ngubah daleman file MP4 lu, tapi gak pake render ulang.<br>
+        Pas lu masukin video, aplikasinya bakal ngebongkar isi filenya, trus disuntikin sekitar 8.500 frame palsu yang ukurannya mini banget di paling ujung video. Selain itu, info durasi sama timescale-nya juga diubah biar keliatan unik.</p>
+
+        <p>Nah, karena dalemannya diubah, posisinya otomatis digeser lagi ama aplikasinya biar videonya gak rusak atau error pas diputar.<br>
+        Kenapa TikTok gak ngompres lagi? Soalnya pas sistem mereka nge-scan file lu, robotnya bakal bingung ngeliat ada error kecil di frame palsu paling ujung tadi. Tapi karena format lainnya keliatan valid, sistem mereka mikir <em>"oh ini video udah optimal, gak usah dikompres lagi"</em>. Makanya pas di-upload kualitasnya tetep jernih.</p>
+
+        <p><strong>Jadi selain disuntik frame palsu tadi, dia tuh sekalian malsuin identitas videonya.</strong> Metadatanya diubah biar sistem TikTok ngira itu video hasil rekaman langsung dari Hp flagship atau iPhone tipe tinggi yang emang dapet "hak istimewa" dari TikTok buat dapet bitrate gede.<br>
+        Makanya pas lu upload, server TikTok langsung ngenalin video lu sebagai video premium. Udah mah dikira dari device high-end, ditambah ada bug frame palsu tadi, makin males lah sistem TikTok buat ngompres. Alhasil video lu langsung lolos sensor dan tetep jernih banget pas di-upload.</p>
+
+        <p><strong>Intinya kombinasi antara buat bingung robot kompresi sama palsuin identitas video biar disangka dari device high.</strong></p>
+        <ul>
+          <li><strong>No Render / Re-encode:</strong> patcher ini kerjanya cepet banget (cuma hitungan detik) karena dia gak ngerender ulang visual videonya, cuma ganti kode biner di metadatanya doang.</li>
+          <li><strong>Cuma buat platform tertentu:</strong> Trik ini emang manjur banget buat TikTok atau Instagram Reels, tapi bakal gak ngefek kalau lu upload ke YouTube, karena YouTube sistem deteksi videonya beda dan jauh lebih ketat nge-scan error ginian.</li>
+        </ul>
+
+        <p style="color:#ffd866; margin-top:12px;">
+          ⚠️ <strong>Yang jual method² mereka kebanyakan tolol bgt dan ga tau cara sebenarnya method ini bekerja</strong>, jadi gw udah ngasih tau lu pada jangan malah jual. Kasian tu Dev dan penemu method nya kerja lembur, lu malah enak panen cuan modal nipu orang.
+        </p>
+      </div>
+    </div>
+
+    <div class="lang-switch">
+      <button class="lang-btn active" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="pt">PT</button>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
